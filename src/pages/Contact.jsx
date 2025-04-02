@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { FaPaperPlane, FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 import './Contact.css';
-import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const formRef = useRef();
@@ -20,9 +19,10 @@ const Contact = () => {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.email.trim()) newErrors.email = 'Email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email';
     }
     if (!formData.message.trim()) newErrors.message = 'Message is required';
     setErrors(newErrors);
@@ -31,52 +31,33 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateForm()) return;
   
     setIsSubmitting(true);
   
     try {
-      const response = await fetch('/api/send-email', {
+      const response = await fetch('/api/send-email', {  // ✅ Correct endpoint
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          // Optional: Add if your serverless function needs it
+          to_email: 'umutyldz2626@gmail.com'  
+        }),
       });
   
       if (!response.ok) throw new Error('Failed to send');
-      
       setSubmitSuccess(true);
       formRef.current.reset();
     } catch (error) {
-      alert('Failed to send message. Please try again later.');
+      alert(error.message || 'Failed to send message');
     } finally {
       setIsSubmitting(false);
     }
   };
-  const emailjs = require('emailjs-com');
-
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') return res.status(405).end();
-
-  try {
-    const { name, email, message } = req.body;
-    
-    await emailjs.send(
-      process.env.EMAILJS_SERVICE_ID,
-      process.env.EMAILJS_TEMPLATE_ID,
-      { name, email, message },
-      process.env.EMAILJS_PRIVATE_KEY // Use PRIVATE key here
-    );
-    
-    res.status(200).json({ success: true });
-  } catch (error) {
-    console.error('Email error:', error);
-    res.status(500).json({ error: error.message });
-  }
-};
-
+  
   return (
     <motion.div 
       className="contact-page"
