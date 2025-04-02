@@ -1,7 +1,7 @@
 // Use dynamic import() instead of require()
 let EmailJS;
 try {
-  EmailJS = (await import('emailjs')).default;
+  const EmailJS = require('emailjs').default;
 } catch (error) {
   console.error('Failed to import emailjs:', error);
   throw error;
