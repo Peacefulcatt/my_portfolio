@@ -1,7 +1,6 @@
-// Use dynamic import() instead of require()
 let EmailJS;
 try {
-  const EmailJS = require('emailjs').default;
+  EmailJS = await import('emailjs');
 } catch (error) {
   console.error('Failed to import emailjs:', error);
   throw error;
@@ -14,6 +13,10 @@ export default async (req, res) => {
     }
 
     const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
 
     const server = EmailJS.server.connect({
       user: process.env.EMAILJS_SERVICE_ID,
