@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import ParticlesBackground from '../components/ParticlesBackground/ParticlesBackground';
@@ -26,7 +27,7 @@ const Home = () => {
             <h1 className="hero-title">
               Hi, I'm <span className="name-highlight">UMUT YILDIZ</span>
             </h1>
-            <h2 className="hero-subtitle">Software Engineer</h2>
+            <h2 className="hero-subtitle">B. Sc. Software Engineering</h2>
 
             <motion.p 
               className="hero-description"
@@ -43,14 +44,14 @@ const Home = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <a href="#contact" className="btn primary">Hire Me</a>
-              <a href="#projects" className="btn secondary">View Work</a>
+              <Link to="/contact" className="btn primary">Contact Me</Link>
+              <Link to="/projects" className="btn secondary">View Work</Link>
             </motion.div>
 
             <div className="social-links">
-              <a href="https://github.com" aria-label="GitHub"><FaGithub /></a>
-              <a href="https://linkedin.com" aria-label="LinkedIn"><FaLinkedin /></a>
-              <a href="https://twitter.com" aria-label="Twitter"><FaTwitter /></a>
+              <a href="https://github.com/Peacefulcatt" aria-label="GitHub"><FaGithub /></a>
+              <a href="https://www.linkedin.com/in/umut-yıldız-12a36523a/" aria-label="LinkedIn"><FaLinkedin /></a>
+              <a href="https://x.com/umutyldz2626" aria-label="Twitter/X"><FaTwitter /></a>
             </div>
           </motion.div>
         </div>

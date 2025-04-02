@@ -1,36 +1,41 @@
 import { motion } from 'framer-motion';
 import { FaCode, FaServer, FaDatabase, FaMobileAlt } from 'react-icons/fa';
+import profilePic from './assets/profile-pic.jpeg';
 import './About.css';
 
 const About = () => {
   const skills = [
-    { name: 'Frontend', icon: <FaCode />, items: ['React', 'JavaScript', 'HTML/CSS', 'Tailwind'] },
-    { name: 'Backend', icon: <FaServer />, items: ['Node.js', 'Express', 'Python', 'Django'] },
-    { name: 'Database', icon: <FaDatabase />, items: ['MongoDB', 'PostgreSQL', 'Firebase', 'MySQL'] },
-    { name: 'Mobile', icon: <FaMobileAlt />, items: ['React Native', 'Flutter', 'iOS', 'Android'] }
+    { name: 'Frontend', icon: <FaCode />, items: ['React', 'JavaScript', 'HTML/CSS'] },
+    { name: 'Backend', icon: <FaServer />, items: ['Node.js','Python', 'Django'] },
+    { name: 'Database', icon: <FaDatabase />, items: ['MongoDB','Firebase'] },
+    { name: 'Mobile', icon: <FaMobileAlt />, items: ['React Native', 'Android'] }
   ];
 
   const experience = [
     {
-      year: '2022 - Present',
-      role: 'Senior Software Engineer',
-      company: 'Tech Solutions Inc.',
-      description: 'Leading frontend development team and implementing new features'
+      year: '2024 - Present',
+      role: 'AI Data Evaluator (Freelance)',
+      company: 'OUTLIER',
+      description: [
+        'Evaluated and analyzed Turkish language prompts for accuracy, relevance, and clarity.',
+        'Provided detailed reports and feedback in English to enhance AI model performance.',
+        'Ensured linguistic quality and consistency across prompts.',
+        'Identified and categorized linguistic patterns, ambiguities, and potential biases.'
+      ]
     },
     {
-      year: '2019 - 2022',
-      role: 'Software Engineer',
-      company: 'Digital Innovations',
-      description: 'Developed and maintained web applications using React and Node.js'
-    },
-    {
-      year: '2017 - 2019',
-      role: 'Junior Developer',
-      company: 'StartUp Labs',
-      description: 'Assisted in building responsive UIs and fixing bugs'
+      year: '2023',
+      role: 'Software Engineer-Intern',
+      company: 'ELMED MEDICAL SYSTEMS',
+      description: [
+        'Independently developed an object detection system for flexible ureteroscopy and laser lithotripsy procedures.',
+        'Designed and implemented an advanced algorithm using Python and OpenCV for real-time kidney stone detection and tracking.',
+        'Integrated user-friendly features like customizable grid density and object dimension adjustments.',
+        'Handled data gathering and labeling to ensure high accuracy in the detection model.'
+      ]
     }
   ];
-
+  
   return (
     <motion.div 
       className="about-page"
@@ -70,7 +75,7 @@ const About = () => {
             </div>
             <div className="about-image">
               <img 
-                src="./profile-pic.png" 
+                src={profilePic} 
                 alt="Profile" 
                 className="profile-image"
               />

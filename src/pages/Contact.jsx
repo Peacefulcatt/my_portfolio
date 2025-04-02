@@ -2,14 +2,11 @@ import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { FaPaperPlane, FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 import './Contact.css';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const formRef = useRef();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -17,38 +14,42 @@ const Contact = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user types
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email';
     }
     if (!formData.message.trim()) newErrors.message = 'Message is required';
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       setIsSubmitting(true);
-      // Simulate form submission
-      setTimeout(() => {
-        setIsSubmitting(false);
+      try {
+        await emailjs.sendForm(
+          'service_cyv8wnz',
+          'template_vaa23y6',
+          formRef.current,
+          '94XLga1oIoRS_XtUe'
+        );
         setSubmitSuccess(true);
         formRef.current.reset();
         setFormData({ name: '', email: '', message: '' });
+      } catch (error) {
+        console.error('Failed to send:', error);
+        alert("Failed to send message. Please try again.");
+      } finally {
+        setIsSubmitting(false);
         setTimeout(() => setSubmitSuccess(false), 3000);
-      }, 1500);
+      }
     }
   };
 
@@ -70,7 +71,7 @@ const Contact = () => {
               <FaMapMarkerAlt className="info-icon" />
               <div>
                 <h3>Location</h3>
-                <p>Your City, Country</p>
+                <p>Eskişehir, Turkey</p>
               </div>
             </div>
             
@@ -78,7 +79,7 @@ const Contact = () => {
               <FaPhone className="info-icon" />
               <div>
                 <h3>Phone</h3>
-                <p>+1 (123) 456-7890</p>
+                <p>+90 (505) 164-4604</p>
               </div>
             </div>
             
@@ -86,7 +87,7 @@ const Contact = () => {
               <FaEnvelope className="info-icon" />
               <div>
                 <h3>Email</h3>
-                <p>your.email@example.com</p>
+                <p>umutyldz2626@gmail.com</p>
               </div>
             </div>
           </div>
