@@ -31,27 +31,51 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      setIsSubmitting(true);
-      try {
-        await emailjs.sendForm(
-          process.env.REACT_APP_EMAILJS_SERVICE_ID,
-          process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
-          formRef.current,
-          process.env.REACT_APP_EMAILJS_PUBLIC_KEY
-        );
-        setSubmitSuccess(true);
-        formRef.current.reset();
-        setFormData({ name: '', email: '', message: '' });
-      } catch (error) {
-        console.error('Failed to send:', error);
-        alert("Failed to send message. Please try again.");
-      } finally {
-        setIsSubmitting(false);
-        setTimeout(() => setSubmitSuccess(false), 3000);
-      }
+    
+    if (!validateForm()) return;
+  
+    setIsSubmitting(true);
+  
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) throw new Error('Failed to send');
+      
+      setSubmitSuccess(true);
+      formRef.current.reset();
+    } catch (error) {
+      alert('Failed to send message. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
+  const emailjs = require('emailjs-com');
+
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  try {
+    const { name, email, message } = req.body;
+    
+    await emailjs.send(
+      process.env.EMAILJS_SERVICE_ID,
+      process.env.EMAILJS_TEMPLATE_ID,
+      { name, email, message },
+      process.env.EMAILJS_PRIVATE_KEY // Use PRIVATE key here
+    );
+    
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('Email error:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
 
   return (
     <motion.div 
