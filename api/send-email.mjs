@@ -15,8 +15,8 @@ export default async (req, res) => {
     // Create a transporter
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com', // Replace with your SMTP host
-      port: 587, // Use 465 for SSL or 587 for TLS
-      secure: false, // Set to true if using port 465
+      port: 465, // Use 465 for SSL or 587 for TLS
+      secure: true, // Set to true if using port 465
       auth: {
         user: process.env.SMTP_USER, // Your email address
         pass: process.env.SMTP_PASS, // Your email password or app-specific password
