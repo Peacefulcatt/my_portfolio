@@ -35,10 +35,10 @@ const Contact = () => {
       setIsSubmitting(true);
       try {
         await emailjs.sendForm(
-          'service_cyv8wnz',
-          'template_vaa23y6',
+          process.env.REACT_APP_EMAILJS_SERVICE_ID,
+          process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
           formRef.current,
-          '94XLga1oIoRS_XtUe'
+          process.env.REACT_APP_EMAILJS_PUBLIC_KEY
         );
         setSubmitSuccess(true);
         formRef.current.reset();
