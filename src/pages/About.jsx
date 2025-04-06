@@ -35,7 +35,12 @@ const About = () => {
       ]
     }
   ];
-  
+  const certificates = [
+    { name: 'CoderspaceDataScience', file: '/assets/2.pdf' },
+    { name: 'CoderspaceTeknolojiOkulu', file: '/assets/3.pdf' },
+    { name: 'YeaAcademy', file: '/assets/4.pdf' }
+  ];
+
   return (
     <motion.div 
       className="about-page"
@@ -62,15 +67,25 @@ const About = () => {
           >
             <div className="about-text">
               <p>
-                I'm a passionate software engineer with 5+ years of experience building 
-                innovative digital solutions. My journey in technology began when I built 
-                my first website at 15, and I've been obsessed with creating exceptional 
-                user experiences ever since.
+                I'm a curious and creative software engineer who loves building meaningful tech experiences. My
+                passion for development started when I first explored how software can solve real-world problems—and
+                since then, I've worked on everything from AI-powered medical tools to interactive quiz apps.
               </p>
               <p>
-                When I'm not coding, you'll find me hiking in nature, reading sci-fi novels, 
-                or experimenting with new cooking recipes. I believe in continuous learning 
-                and staying curious about emerging technologies.
+                Outside of coding, I enjoy gaming, diving into philosophy and history, and playing basketball whenever I 
+                get the chance. I’m always eager to learn new technologies and push the boundaries of what’s possible 
+                with code.
+              </p>
+              <p>
+                You can view my CV here:  
+                <a 
+                  href="/assets/CV-2025.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="cv-link"
+                >
+                  Download CV
+                </a>
               </p>
             </div>
             <div className="about-image">
@@ -139,9 +154,37 @@ const About = () => {
             ))}
           </motion.div>
         </section>
+
+        <section className="certificates-section">
+        <motion.h3
+          initial={{ y: -20 }}
+          animate={{ y: 0 }}
+          transition={{ delay: 1.4 }}
+        >
+          Certificates
+        </motion.h3>
+        
+        <motion.div 
+          className="certificates-list"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6 }}
+        >
+          <ul>
+            {certificates.map((cert, index) => (
+              <li key={index}>
+                <a href={cert.file} target="_blank" rel="noopener noreferrer">
+                  {cert.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      </section>
       </div>
     </motion.div>
   );
 };
+
 
 export default About;

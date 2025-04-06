@@ -243,3 +243,35 @@
       padding-left: 1.5rem;
     }
   }
+  .certificates-section {
+    margin-top: 2rem;
+  }
+  
+  .certificates-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .certificates-list li {
+    margin: 0.5rem 0;
+  }
+  
+  .certificates-list a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+  }
+  
+  .certificates-list a:hover {
+    color: #0056b3;
+  }
+  .cv-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .cv-link:hover {
+    color: #0056b3;
+  }
